@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -18,7 +19,6 @@ public class Role implements GrantedAuthority {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    @Transient
     private Set<User> userSet;
 
     public Role() {
