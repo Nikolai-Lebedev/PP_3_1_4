@@ -16,12 +16,22 @@
   <input type="text" th:field="*{password}" id="password">
   <br/>
 
+
+  <label for="lastName">Enter last name:</label>
+  <input type="text" th:field="*{lastName}" id="lastName">
+  <br/>
+  <label for="age">Enter age:</label>
+  <input type="text" th:field="*{age}" id="age">
+  <br/>
+
   <label for="email">Enter email:</label>
   <input type="text" th:field="*{email}" id="email">
   <br/>
 
-  <input type="submit" value="Update!"/>
 
+  <input type="submit" value="Update!"/>
+  <br/>
+  <br/>
 
 </form>
 <form th:method="GET" th:action="@{/logout}" >

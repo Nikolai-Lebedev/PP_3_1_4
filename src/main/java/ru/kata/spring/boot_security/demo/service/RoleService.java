@@ -2,9 +2,15 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 
+import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
+@Transactional
 public class RoleService {
 
     private final RoleRepository roleRepository;
@@ -13,4 +19,22 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
+
+    public Role getRoleByID(Long id) {
+        return roleRepository.findRoleById(id);
+    }
+
+    public Role getOrCreateRole(String name) {
+        Role role = roleRepository.findRoleByName(name);
+        if (role == null) {
+            role = new Role(name);
+            roleRepository.save(role);
+        }
+        return role;
+    }
+
+
+    public Set<Role> getRoles() {
+        return new HashSet<>(roleRepository.findAll());
+    }
 }

@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@DynamicUpdate
 public class User implements UserDetails {
     @Column(name = "id")
     @Id
@@ -17,22 +19,40 @@ public class User implements UserDetails {
     private Long id;
     @Column(name = "name")
     private String name;
+    @Column(name = "lastName")
+    private String lastName;
+    @Column(name = "age")
+    private int age;
     @Column(name = "password")
     private String password;
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {}
-    public User(String name, String password, String email) {
+
+
+    public User(Long id, String name, String lastName, int age, String password, String email) {
+        this.id = id;
         this.name = name;
+        this.lastName = lastName;
+        this.age = age;
         this.password = password;
         this.email = email;
+    }
+
+    public User(String name, String lastName, int age, String password, String email, Set<Role> roles) {
+        this.name = name;
+        this.lastName = lastName;
+        this.age = age;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -43,12 +63,27 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getUsername() {
-        return name;
-    }
 
     public void setName(String name) {
         this.name = name;
+    }
+    public String getName() {
+        return this.name;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public void setPassword(String password) {
@@ -71,6 +106,26 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public void setOneRole(Role role) {
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+        roles.add(role);
+    }
+    public String printAuthorities() {
+        StringBuilder sbRoles = new StringBuilder();
+        for (Role role: roles) {
+            sbRoles.append(role.getAuthority().replace("ROLE_", ""));
+//            sbRoles.append(" ");
+            sbRoles.append("\n");
+        }
+        return sbRoles.toString();
+    }
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.getRoles();
@@ -81,9 +136,7 @@ public class User implements UserDetails {
         return this.password;
     }
 
-    public String getName() {
-        return this.name;
-    }
+
 
     @Override
     public boolean isAccountNonExpired() {
