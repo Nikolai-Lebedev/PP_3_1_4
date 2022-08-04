@@ -28,11 +28,11 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<Role> roles= new HashSet<>();
 
     public User() {}
 
@@ -107,16 +107,12 @@ public class User implements UserDetails {
     }
 
     public void setOneRole(Role role) {
-        if (roles == null) {
-            roles = new HashSet<>();
-        }
         roles.add(role);
     }
     public String printAuthorities() {
         StringBuilder sbRoles = new StringBuilder();
         for (Role role: roles) {
             sbRoles.append(role.getAuthority().replace("ROLE_", ""));
-//            sbRoles.append(" ");
             sbRoles.append("\n");
         }
         return sbRoles.toString();

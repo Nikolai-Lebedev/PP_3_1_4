@@ -14,6 +14,7 @@ import java.util.Set;
 public class RoleService {
 
     private final RoleRepository roleRepository;
+
     @Autowired
     public RoleService(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
@@ -22,15 +23,6 @@ public class RoleService {
 
     public Role getRoleByID(Long id) {
         return roleRepository.findRoleById(id);
-    }
-
-    public Role getOrCreateRole(String name) {
-        Role role = roleRepository.findRoleByName(name);
-        if (role == null) {
-            role = new Role(name);
-            roleRepository.save(role);
-        }
-        return role;
     }
 
 

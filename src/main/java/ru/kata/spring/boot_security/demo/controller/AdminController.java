@@ -41,28 +41,21 @@ public class AdminController {
         model.addAttribute("roles", roleService.getRoles());
         return "new";
     }
+
     @PostMapping("/new")
-    public String create(@ModelAttribute ("User")  User user,
-                         @RequestParam(value = "checked", required = false) Long[] checked) {
-        for (Long aLong : checked) {
-            user.setOneRole(roleService.getRoleByID(aLong));
-            userService.add(user);
-        }
+    public String save(@ModelAttribute User user, Model model) {
+        model.addAttribute("user", userService.add(user));
         return "redirect:/admin";
     }
-//    }@PostMapping("/new")
-//    public String create(@ModelAttribute("user") User user) {
-//        userService.add(user);
-//        return "redirect:/admin";
-//    }
-    @GetMapping("/{id}/edit")
+    @GetMapping(value = "/{id}/edit")
     public String edit(Model model, @PathVariable("id") Long id){
         model.addAttribute("user", userService.findById(id));
+        model.addAttribute("roles", roleService.getRoles());
         return "edit";
     }
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user, Model model){
-        model.addAttribute("user", userService.update(user));
+    @PostMapping(value = "/edit")
+    public String update(@RequestParam() long id, User user){
+        userService.updateUser(id,user);
         return "redirect:/admin";
     }
     @DeleteMapping("/{id}")

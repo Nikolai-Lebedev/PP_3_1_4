@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/admin}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
   <label for="name">Enter name:</label>
   <input type="text" th:field="*{name}" id="name">
   <br/>
@@ -27,8 +27,7 @@
   <div th:each="role : ${roles}">
     <input type="checkbox" th:field="*{roles}" th:value="${role.getId()}" /><label th:text="${role.getName()}">example</label>
   </div>
-<!--  <label for="roles">Enter roles:</label>-->
-<!--  <input type="text" th:field="*{roles}" id="roles">-->
+
   <br/>
 
   <input type="submit" value="Create!"/>

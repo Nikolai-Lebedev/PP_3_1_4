@@ -31,7 +31,7 @@
         <td th:utext="${user.printAuthorities()}">Role</td>
 
 
-        <td> <form th:method="GET" th:action="@{/admin/{id}/edit(id=${user.getId()})}" th:object="${user}">
+        <td> <form th:method="GET" th:action="@{admin/{id}/edit(id=${user.getId()})}" th:object="${user}">
             <input type="submit" value="Edit user">
         </form>
         </td>

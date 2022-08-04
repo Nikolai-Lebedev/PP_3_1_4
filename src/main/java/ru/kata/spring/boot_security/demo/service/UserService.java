@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class UserService implements UserDetailsService {
+
+
     private final UserRepository userRepository;
 
     @Autowired
@@ -34,13 +36,13 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
-    public User update(User user) {
+
+    public void updateUser(long id, User user) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(user.getRoles());
-        return userRepository.save(user);
+        user.setId(id);
+        userRepository.save(user);
     }
-
 
 
     public List<User> getAll() {
@@ -54,22 +56,22 @@ public class UserService implements UserDetailsService {
     public User findById(Long id) {
         return userRepository.getById(id);
     }
-    public User findByName(String name){
-     return userRepository.findByName(name);
+
+    public User findByName(String name) {
+        return userRepository.findByName(name);
     }
 
 
-
-    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByName(username);
-        if (user==null) {
+        if (user == null) {
             throw new UsernameNotFoundException(String.format("User with name '%s' not found", username));
         }
-        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(),mapRoles(user.getRoles()));
+        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), mapRoles(user.getRoles()));
     }
-    private Collection<? extends GrantedAuthority> mapRoles (Set<Role> roles){
-        return roles.stream().map(r-> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toSet());
+
+    private Collection<? extends GrantedAuthority> mapRoles(Set<Role> roles) {
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toSet());
     }
 }
