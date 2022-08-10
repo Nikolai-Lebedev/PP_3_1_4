@@ -36,7 +36,7 @@
         </form>
         </td>
 
-        <td> <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}" >
+        <td> <form th:method="DELETE" th:action="@{admin/{id}/delete(id=${user.getId()})}" >
             <input type="submit" value="Delete user">
         </form>
         </td>
@@ -47,6 +47,10 @@
 <br/>
 <form th:method="GET" th:action="@{/admin/new}" >
     <input type="submit" value="Add user">
+</form>
+<br/>
+<form th:method="GET" th:action="@{/user}" >
+    <input type="submit" value="User">
 </form>
 <br/>
 
