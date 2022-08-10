@@ -26,6 +26,7 @@
 <!--</nav>-->
 <!--навбар-->
 
+
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
         <p class="navbar-brand text-white">
@@ -58,11 +59,13 @@
         <div class="row">
             <div class="p-0 col-2">
                 <div class="nav flex-column nav-pills pt-4" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
                     <a class="nav-link active" href="/admin" sec:authorize="hasRole('ADMIN')" role="tab"
                        aria-controls="v-pills-home" aria-selected="true">Admin</a>
                     <a class="nav-link" href="/user" sec:authorize="(hasAnyRole('ADMIN', 'USER'))"
                        role="tab"
                        aria-controls="v-pills-profile" aria-selected="false">User</a>
+
                 </div>
             </div>
             <div class="col-10 px-0">
@@ -123,12 +126,12 @@
                                                           th:object="${user}" th:method="POST">
                                                         <div class="modal-body col-md text-center">
                                                             <br>
-                                                            <label for="name0"><b>Name</b></label>
+                                                            <label for="name0"><b>First Name</b></label>
                                                             <input th:name="name" th:type="text"
                                                                    class="form-control" id="name0"
                                                                    th:value="${user.name}"/>
                                                             <br>
-                                                            <label for="lastname0"><b>Surname</b></label>
+                                                            <label for="lastname0"><b>Last Name</b></label>
                                                             <input th:name="lastname" th:type="text"
                                                                    class="form-control" id="lastname0"
                                                                    th:value="${user.lastName}"/>
@@ -149,8 +152,11 @@
                                                                    th:value="${user.password}"/>
                                                             <br>
                                                             <label for="roles"><b>Role</b></label>
-                                                            <select multiple class="form-control form-control-sm" id="roles" name="roles" size="2" required>
-                                                                <option th:each="role: ${rolseList}" th:value="${role.getId()}" th:selected="${user.setOneRole(role)}">
+                                                            <select multiple class="form-control form-control-sm"
+                                                                    id="roles" name="roles" size="2" required>
+                                                                <option th:each="role: ${rolseList}"
+                                                                        th:value="${role.getId()}"
+                                                                        th:selected="${user.setOneRole(role)}">
                                                                     <th:block th:text="${role.toString()}">
                                                                     </th:block>
                                                                 </option>
@@ -209,8 +215,10 @@
                                                                    id="email1" th:value="${user.email}" disabled/>
                                                             <br>
                                                             <label for="roles"><b>Role</b></label>
-                                                            <select multiple class="form-control form-control-sm" id="roles1" name="roles" size="2" required readonly>
-                                                                <option th:each="role: ${user.roles}" th:value="${role.getId()}">
+                                                            <select multiple class="form-control form-control-sm"
+                                                                    id="roles1" name="roles" size="2" required readonly>
+                                                                <option th:each="role: ${user.roles}"
+                                                                        th:value="${role.getId()}">
                                                                     <th:block th:text="${role.toString()}">
                                                                     </th:block>
                                                                 </option>

@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@DynamicUpdate
+
 public class User implements UserDetails {
     @Column(name = "id")
     @Id
@@ -37,7 +37,7 @@ public class User implements UserDetails {
     public User() {}
 
 
-    public User(Long id, String name, String lastName, int age, String password, String email) {
+    public User(Long id, String name, String lastName, int age, String email, String password) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -46,7 +46,7 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public User(String name, String lastName, int age, String password, String email, Set<Role> roles) {
+    public User(String name, String lastName, int age,  String email, String password, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;

@@ -32,5 +32,12 @@ public class RoleService {
     public Role getRoleByName(String name){
         return roleRepository.findRoleByName(name);
     }
+    public HashSet<Role> getSetOfRoles(String[] rolesNames) {
+        HashSet<Role> roleSet = new HashSet<>();
+        for (String role : rolesNames) {
+            roleSet.add(getRoleByName(role));
+        }
+        return roleSet;
+    }
 
 }

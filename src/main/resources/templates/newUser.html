@@ -95,6 +95,14 @@
                                 <label for="password"><b>Password</b></label>
                                 <input th:name="password" th:field="*{password}" th:type="password" class="form-control"
                                        id="password"/>
+<!--                                <label for="select" class="form-label mb-0"><strong>Role</strong></label>-->
+<!--                                <select class="form-select" size="2" id="select" multiple-->
+<!--                                        aria-label="multiple select example"-->
+<!--                                        name="roles"-->
+<!--                                        th:field="*{roles}">-->
+<!--                                    <option th:each="role:${roles}" th:value="${role.id}"-->
+<!--                                            th:text="${role.toString()}"></option>-->
+<!--                                </select>-->
                                 <br>
                                 <label for="roles"><b>Role</b></label>
                                 <select multiple class="form-control form-control-sm" id="roles" name="roles" size="2"

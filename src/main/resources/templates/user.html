@@ -1,49 +1,6 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>User</title>-->
-<!--    <style>-->
-<!--        table th, table td{-->
-<!--            padding: 3px;-->
-<!--        }-->
-<!--    </style>-->
-<!--</head>-->
-<!--<body>-->
-
-<!--<table border = "3">-->
-<!--    <tr>-->
-<!--        <th>Id</th>-->
-<!--        <th>Name</th>-->
-<!--        <th>LastName</th>-->
-<!--        <th>Age</th>-->
-<!--        <th>Email</th>-->
-<!--    </tr>-->
-<!--<tr>-->
-<!--        <td th:utext="${user.getId()}">Id</td>-->
-<!--        <td th:utext="${user.getName()}">Name</td>-->
-<!--        <td th:utext="${user.getLastName()}">LastName</td>-->
-<!--        <td th:utext="${user.getAge()}">Age</td>-->
-<!--        <td th:utext="${user.getEmail()}">Email</td>-->
-
-
-
-<!--    </tr>-->
-<!--    <form th:method="GET" th:action="@{/logout}" >-->
-<!--        <input type="submit" value="Logout">-->
-<!--    </form>-->
-
-<!--    </tr>-->
-<!--    <form th:method="GET" th:action="@{/admin}" >-->
-<!--        <input type="submit" value="Admin page">-->
-<!--    </form>-->
-<!--</table>-->
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -52,13 +9,12 @@
     <title>User Page</title>
 </head>
 <body>
-<!-- Верхняя навигационная панель -->
+
 <nav class="navbar bg-dark navbar-dark fixed-top">
     <form class="form-inline">
         <strong><span class="navbar-text text-white" th:text="${user.getEmail()}"}></span></strong>
         <span class="navbar-text text-white">&nbsp with roles: &nbsp</span>
-        <span class="navbar-text text-white"th:text="${user.printAuthorities()}"}></span>
-<!--        <span class="navbar-text text-white"><a th:each="role: ${user.getRoles()}" th:text="${role}+' '"></a></span>-->
+        <span class="navbar-text text-white"><a th:each="role: ${user.getRoles()}" th:text="${user.printAuthorities()}+' '"></a></span>
     </form>
     <ul class="navbar-nav float-lg-end">
         <li class="nav-item">
@@ -67,16 +23,16 @@
     </ul>
 </nav>
 
-<!-- Контейнер под панелью навигации -->
+
 <div class="container-fluid bg-light">
     <div class="row">
-        <!-- Левый блок -->
+
         <div class="col-sm-2 bg-white min-vh-100">
             <ul class="nav nav-pills flex-column">
                 <br />
                 <br />
                 <br />
-                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
                     <a class="nav-link" th:href="@{/admin}">Admin</a>
                 </li>
                 <li class="nav-item">
@@ -85,13 +41,13 @@
             </ul>
         </div>
 
-        <!-- Правый блок -->
+
         <div class="col-sm-10 bg-light"><br><br><br>
-            <h2>User infomation-Page</h2>
+            <h2>User information-page</h2>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col border bg-light">
-                        <p><h6>About User</h6></p>
+                        <p><h6>About user:</h6></p>
                     </div>
                     <div class="w-100"></div>
                     <div class="col border bg-white">
@@ -99,7 +55,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Id</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Age</th>
@@ -114,8 +70,7 @@
                                 <td th:text="${user.getLastName()}"></td>
                                 <td th:text="${user.getAge()}"></td>
                                 <td th:text="${user.getEmail()}"></td>
-                                <td th:text="${user.printAuthorities()}"></td>
-<!--                                <td><a th:each="role : ${user.getRoles()}" th:text="${role} + ' '"></a></td>-->
+                                <td><a th:each="role : ${user.getRoles()}" th:text="${role.toString()} + ' '"></a></td>
                             </tr>
                             </tbody>
                         </table>
