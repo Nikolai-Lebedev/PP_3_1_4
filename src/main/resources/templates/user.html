@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>User Page</title>
+    <title>User page</title>
 </head>
 <body>
 
@@ -14,7 +14,7 @@
     <form class="form-inline">
         <strong><span class="navbar-text text-white" th:text="${user.getEmail()}"}></span></strong>
         <span class="navbar-text text-white">&nbsp with roles: &nbsp</span>
-        <span class="navbar-text text-white"><a th:each="role: ${user.getRoles()}" th:text="${user.printAuthorities()}+' '"></a></span>
+        <span class="navbar-text text-white"><a th:each="role: ${user.getRoles()}" th:text="${role.toString()}+' '"></a></span>
     </form>
     <ul class="navbar-nav float-lg-end">
         <li class="nav-item">
